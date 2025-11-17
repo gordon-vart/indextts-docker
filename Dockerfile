@@ -46,24 +46,15 @@ RUN uv sync --all-extras
 # ======================================================================
 RUN uv tool install "huggingface-hub[hf_xet]"
 
-# Add uv tools to PATH so "hf" becomes available
-# ENV PATH="/root/.local/share/uv/tools/bin:${PATH}"
-
 # Create checkpoint folder
 RUN mkdir -p /app/index-tts/checkpoints
 
-# ======================================================================
-# Download IndexTTS2 model
-# ======================================================================
-#RUN hf download IndexTeam/IndexTTS-2 --local-dir=/app/index-tts/checkpoints
-RUN /root/.local/bin/hf download IndexTeam/IndexTTS-2 --local-dir=/app/index-tts/checkpoints
+# Download model if missing at container start
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# ======================================================================
 # Expose WebUI port
-# ======================================================================
 EXPOSE 7860
 
-# ======================================================================
-# Default command: Launch the WebUI
-# ======================================================================
-CMD ["uv", "run", "webui.py", "--host", "0.0.0.0", "--port", "7860"]
+# Launch WebUI
+ENTRYPOINT ["/entrypoint.sh"]
