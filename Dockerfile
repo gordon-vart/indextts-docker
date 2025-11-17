@@ -44,14 +44,10 @@ RUN uv sync --all-extras
 # ======================================================================
 # Install HuggingFace CLI for model downloads
 # ======================================================================
-#RUN uv tool install "huggingface-hub[cli,hf_xet]"
-RUN uv tool install "huggingface-hub[cli,hf_xet]" \
-    && find / -name "huggingface-cli" 2>/dev/null || true
-
+RUN uv tool install "huggingface-hub[hf_xet]"
 
 # Add uv tools to PATH so "hf" becomes available
 # ENV PATH="/root/.local/share/uv/tools/bin:${PATH}"
-ENV PATH="/root/.local/bin:${PATH}"
 
 # Create checkpoint folder
 RUN mkdir -p /app/index-tts/checkpoints
@@ -60,7 +56,7 @@ RUN mkdir -p /app/index-tts/checkpoints
 # Download IndexTTS2 model
 # ======================================================================
 #RUN hf download IndexTeam/IndexTTS-2 --local-dir=/app/index-tts/checkpoints
-RUN huggingface-cli download IndexTeam/IndexTTS-2 --local-dir=/app/index-tts/checkpoints
+RUN /root/.local/bin/hf download IndexTeam/IndexTTS-2 --local-dir=/app/index-tts/checkpoints
 
 # ======================================================================
 # Expose WebUI port
