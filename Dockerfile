@@ -48,6 +48,7 @@ RUN uv tool install "huggingface-hub[cli,hf_xet]"
 
 # Add uv tools to PATH so "hf" becomes available
 # ENV PATH="/root/.local/share/uv/tools/bin:${PATH}"
+ENV PATH="/root/.local/bin:${PATH}"
 
 # Create checkpoint folder
 RUN mkdir -p /app/index-tts/checkpoints
