@@ -44,7 +44,10 @@ RUN uv sync --all-extras
 # ======================================================================
 # Install HuggingFace CLI for model downloads
 # ======================================================================
-RUN uv tool install "huggingface-hub[cli,hf_xet]"
+#RUN uv tool install "huggingface-hub[cli,hf_xet]"
+RUN uv tool install "huggingface-hub[cli,hf_xet]" \
+    && find / -name "huggingface-cli" 2>/dev/null || true
+
 
 # Add uv tools to PATH so "hf" becomes available
 # ENV PATH="/root/.local/share/uv/tools/bin:${PATH}"
