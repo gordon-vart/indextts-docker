@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 RUN git lfs install
 
 # ======================================================================
-# Install uv (official supported method inside container)
+# Install uv (official supported method inside container) 
 # ======================================================================
 RUN pip install -U uv
 
